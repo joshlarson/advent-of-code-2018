@@ -6,3 +6,9 @@ services:
     command: bash -c "mix escript.build && ./advent input.txt"
     volumes:
       - ./day1:/app
+  day2:
+    image: elixir:1.7.4
+    working_dir: /app
+    command: bash -c "mix escript.build && ./advent input.txt"
+    volumes:
+      - ./day2:/app
