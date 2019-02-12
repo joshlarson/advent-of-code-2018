@@ -1,8 +1,6 @@
-defmodule Advent do
-  def main(args \\ ["input.txt"]) do
-    {:ok, content} = args
-    |> List.first
-    |> File.read
+defmodule Day1 do
+  def main do
+    {:ok, content} = File.read("day1_input.txt")
 
     content
     |> final_frequency

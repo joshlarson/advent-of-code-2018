@@ -1,8 +1,6 @@
-defmodule Advent do
-  def main(args \\ ["input.txt"]) do
-    {:ok, content} = args
-                      |> List.first
-                      |> File.read
+defmodule Day2 do
+  def main do
+    {:ok, content} = File.read("day2_input.txt")
 
     content
     |> checksum

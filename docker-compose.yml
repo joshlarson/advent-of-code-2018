@@ -1,14 +1,12 @@
 version: "3"
 services:
-  day1:
-    image: elixir:1.7.4
+  test:
+    build: advent
     working_dir: /app
-    command: bash -c "mix escript.build && ./advent input.txt"
+    command: bash -c "watch mix test"
     volumes:
-      - ./day1:/app
-  day2:
-    image: elixir:1.7.4
+      - ./advent:/app
+  day:
+    build: advent
     working_dir: /app
-    command: bash -c "mix escript.build && ./advent input.txt"
-    volumes:
-      - ./day2:/app
+    command: bash -c "./advent"

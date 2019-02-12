@@ -2,22 +2,24 @@
 
 ## Run Instructions
 
-Run a particular day with
+Run the most recent day with
 
-    docker-compose run dayN
+    docker-compose run --rm day
 
-(for instance, `day1`)
+This won't rebuild the image, so you may need to recompile with
 
-That will compile and run the program for that day, printing the answers as output.
+    docker-compose build
 
-To run the tests for a given day, run
+Run a specific day with (for instance, for `day1`)
 
-    docker-compose run dayN mix test
+    docker-compose run --rm day ./advent day1
 
-And to just get a shell into that day's work:
+That will run the program for that day, printing the answers as output.
 
-    docker-compose run dayN /bin/bash
+To watch the tests run,
 
-The above steps create a number of stale containers. To remove those, run
+    docker-compose run --rm test
 
-    docker-compose down
+And to get an iex shell, run
+
+    docker-compose run --rm day iex
