@@ -3,6 +3,7 @@ defmodule Advent do
     mods = %{
       "day1" => Day1,
       "day2" => Day2,
+      "day3" => Day3,
     }
 
     {day_n, mod} = if Enum.any?(args) do
