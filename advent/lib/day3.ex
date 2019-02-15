@@ -5,6 +5,10 @@ defmodule Day3 do
     content
     |> overlaps
     |> IO.puts
+
+    content
+    |> non_overlapping_claim
+    |> IO.puts
   end
 
   def overlaps(input) do
@@ -12,6 +16,22 @@ defmodule Day3 do
     |> parse_all_claims
     |> overlapping_points
     |> Enum.count
+  end
+
+  def non_overlapping_claim(input) do
+    claims = parse_all_claims(input)
+    overlapping_points = overlapping_points(claims)
+
+    claim = claims
+    |> Enum.find(fn claim -> !has_overlap?(claim, overlapping_points) end)
+
+    claim[:claim_number]
+  end
+
+  defp has_overlap?(claim, overlapping_points) do
+    claim
+    |> point_list
+    |> Enum.any?(fn pt -> overlapping_points |> MapSet.member?(pt) end)
   end
 
   defp parse_all_claims(input) do
@@ -31,12 +51,13 @@ defmodule Day3 do
   end
 
   def parse_claim(claim) do
-    [_, _, start, size] = String.split(claim)
+    [claim_number, _, start, size] = String.split(claim)
 
     {x_size, y_size} = parse_size(size)
     {x_start, y_start} = parse_start(start)
 
     %{
+      claim_number: claim_number |> String.slice(1..-1) |> String.to_integer,
       x_size: x_size,
       y_size: y_size,
       x_start: x_start,

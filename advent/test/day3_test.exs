@@ -16,6 +16,16 @@ defmodule Day3Test do
     end
   end
 
+  describe "non_overlapping_claim" do
+    test "identifies the non-overlapping claim if it is the first one" do
+      assert Day3.non_overlapping_claim("#1 @ 5,5: 2x2\n#2 @ 1,3: 4x4\n#3 @ 3,1: 4x4\n") == 1
+    end
+
+    test "identifies the non-overlapping claim if it is not the first one" do
+      assert Day3.non_overlapping_claim("#1 @ 1,3: 4x4\n#2 @ 3,1: 4x4\n#3 @ 5,5: 2x2\n") == 3
+    end
+  end
+
   describe "parse_claim" do
     test "finds the x_size" do
       assert Day3.parse_claim("#1 @ 1,3: 4x5")[:x_size] == 4
@@ -31,6 +41,10 @@ defmodule Day3Test do
 
     test "finds the y_start" do
       assert Day3.parse_claim("#1 @ 1,3: 4x5")[:y_start] == 3
+    end
+
+    test "finds the claim number" do
+      assert Day3.parse_claim("#17 @ 1,3: 4x5")[:claim_number] == 17
     end
   end
 end
