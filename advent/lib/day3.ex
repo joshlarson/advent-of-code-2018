@@ -9,14 +9,25 @@ defmodule Day3 do
 
   def overlaps(input) do
     input
+    |> parse_all_claims
+    |> overlapping_points
+    |> Enum.count
+  end
+
+  defp parse_all_claims(input) do
+    input
     |> String.split("\n")
     |> Enum.filter( fn s -> s != "" end )
     |> Enum.map(&parse_claim/1)
+  end
+
+  defp overlapping_points(claims) do
+    claims
     |> Enum.flat_map(&point_list/1)
     |> Enum.group_by(&(&1))
     |> Map.new(fn {pt, pts} -> {pt, Enum.count(pts)} end)
     |> Enum.filter(fn {_, count} -> count > 1 end)
-    |> Enum.count
+    |> MapSet.new(fn {pt, _} -> pt end)
   end
 
   def parse_claim(claim) do
