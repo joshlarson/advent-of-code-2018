@@ -4,11 +4,11 @@ defmodule Day2 do
 
     content
     |> checksum
-    |> IO.puts
+    |> IO.puts()
 
     content
     |> common_letters
-    |> IO.puts
+    |> IO.puts()
   end
 
   def checksum(input) do
@@ -23,25 +23,27 @@ defmodule Day2 do
 
   defp has_exactly_n_of_something(box_id, n) do
     box_id
-    |> String.codepoints
-    |> Enum.group_by(&(&1))
+    |> String.codepoints()
+    |> Enum.group_by(& &1)
     |> Enum.any?(fn {_, value} -> Enum.count(value) == n end)
   end
 
   def common_letters(input) do
-    box_ids = String.split(input, "\n")
-              |> Enum.map(&String.codepoints/1)
+    box_ids =
+      String.split(input, "\n")
+      |> Enum.map(&String.codepoints/1)
 
-    {id1, id2} = box_ids
-                 |> Enum.map(fn id -> {id, find_with_one_mismatch(id, box_ids)} end)
-                 |> Enum.filter(fn {_, other_ids} -> other_ids |> Enum.any? end)
-                 |> Enum.map(fn {id, other_ids} -> {id, List.first(other_ids)} end)
-                 |> List.first
+    {id1, id2} =
+      box_ids
+      |> Enum.map(fn id -> {id, find_with_one_mismatch(id, box_ids)} end)
+      |> Enum.filter(fn {_, other_ids} -> other_ids |> Enum.any?() end)
+      |> Enum.map(fn {id, other_ids} -> {id, List.first(other_ids)} end)
+      |> List.first()
 
     Enum.zip(id1, id2)
     |> Enum.filter(fn {x, y} -> x == y end)
     |> Enum.map(fn {x, _} -> x end)
-    |> Enum.join
+    |> Enum.join()
   end
 
   defp find_with_one_mismatch(id1, box_ids) do

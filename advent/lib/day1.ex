@@ -4,11 +4,11 @@ defmodule Day1 do
 
     content
     |> final_frequency
-    |> IO.puts
+    |> IO.puts()
 
     content
     |> first_aggregate_duplicate
-    |> IO.puts
+    |> IO.puts()
   end
 
   def first_aggregate_duplicate(input) do
@@ -18,7 +18,7 @@ defmodule Day1 do
 
   def aggregate_frequencies(input) do
     frequency_deltas(input)
-    |> Stream.cycle
+    |> Stream.cycle()
     |> Stream.scan(&+/2)
   end
 
@@ -31,13 +31,13 @@ defmodule Day1 do
     if x in set do
       {:halt, x}
     else
-      {:cont, set |> MapSet.put(x) }
+      {:cont, set |> MapSet.put(x)}
     end
   end
 
   def final_frequency(input) do
     frequency_deltas(input)
-    |> Enum.sum
+    |> Enum.sum()
   end
 
   def frequency_deltas(input) do

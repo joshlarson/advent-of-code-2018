@@ -8,7 +8,7 @@ defmodule Advent.MixProject do
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      escript: escript(),
+      escript: escript()
     ]
   end
 
@@ -21,7 +21,7 @@ defmodule Advent.MixProject do
 
   def escript do
     [
-      main_module: Advent,
+      main_module: Advent
     ]
   end
 
