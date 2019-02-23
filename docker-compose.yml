@@ -1,12 +1,7 @@
 version: "3"
 services:
-  test:
+  advent:
     build: advent
-    working_dir: /app
     command: bash -c "watch mix test"
     volumes:
       - ./advent:/app
-  day:
-    build: advent
-    working_dir: /app
-    command: bash -c "./advent"
