@@ -4,7 +4,7 @@
 
 Run the most recent day with
 
-    docker-compose run --rm advent ./advent
+    docker-compose run --rm day
 
 This won't rebuild the image, so you may need to recompile with
 
@@ -12,22 +12,22 @@ This won't rebuild the image, so you may need to recompile with
 
 Run a specific day with (for instance, for `day1`)
 
-    docker-compose run --rm advent ./advent day1
+    docker-compose run --rm day ./advent day1
 
 That will run the program for that day, printing the answers as output.
 
 To watch the tests run,
 
-    docker-compose run --rm advent
+    docker-compose run --rm test
 
 And to get an iex shell, run
 
-    docker-compose run --rm advent iex
+    docker-compose run --rm day iex
 
 Check for warnings with
 
-    docker-compose run --rm advent mix compile --warnings-as-errors --force
+    docker-compose run --rm test mix compile --warnings-as-errors --force
 
 And format with
 
-    docker-compose run --rm advent mix format
+    docker-compose run --rm test mix format
