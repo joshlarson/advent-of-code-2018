@@ -89,6 +89,88 @@ defmodule Day4Test do
     end
   end
 
+  describe "sleepy_minute" do
+    test "finds a guard's sleepiest minute" do
+      guard =
+        Day4.sleepy_minute([
+          "[1518-11-01 00:00] Guard #10 begins shift",
+          "[1518-11-01 00:05] falls asleep",
+          "[1518-11-01 00:06] wakes up"
+        ])
+
+      assert guard[:minute] == 5
+      assert guard[:id] == 10
+    end
+
+    test "sorts the guards by most-asleep minute rather than most asleep minutes" do
+      guard =
+        Day4.sleepy_minute([
+          "[1518-11-01 00:00] Guard #10 begins shift",
+          "[1518-11-01 00:05] falls asleep",
+          "[1518-11-01 00:07] wakes up",
+          "[1518-11-02 00:00] Guard #4 begins shift",
+          "[1518-11-02 00:05] falls asleep",
+          "[1518-11-02 00:30] wakes up",
+          "[1518-11-03 00:00] Guard #10 begins shift",
+          "[1518-11-03 00:06] falls asleep",
+          "[1518-11-03 00:08] wakes up"
+        ])
+
+      assert guard[:minute] == 6
+      assert guard[:id] == 10
+    end
+
+    test "sorts by number of times the minute was asleep, not where in the alphabet it is" do
+      guard =
+        Day4.sleepy_minute([
+          "[1518-11-01 00:00] Guard #10 begins shift",
+          "[1518-11-01 00:05] falls asleep",
+          "[1518-11-01 00:07] wakes up",
+          "[1518-11-02 00:00] Guard #4 begins shift",
+          "[1518-11-02 00:45] falls asleep",
+          "[1518-11-02 00:59] wakes up",
+          "[1518-11-03 00:00] Guard #10 begins shift",
+          "[1518-11-03 00:06] falls asleep",
+          "[1518-11-03 00:08] wakes up"
+        ])
+
+      assert guard[:minute] == 6
+      assert guard[:id] == 10
+    end
+
+    test "works even if a guard does not sleep" do
+      guard =
+        Day4.sleepy_minute([
+          "[1518-11-01 00:00] Guard #10 begins shift",
+          "[1518-11-01 00:05] falls asleep",
+          "[1518-11-01 00:07] wakes up",
+          "[1518-11-02 00:00] Guard #4 begins shift",
+          "[1518-11-03 00:00] Guard #10 begins shift",
+          "[1518-11-03 00:06] falls asleep",
+          "[1518-11-03 00:08] wakes up"
+        ])
+
+      assert guard[:minute] == 6
+      assert guard[:id] == 10
+    end
+
+    test "works even if the input is jumbled" do
+      guard =
+        Day4.sleepy_minute([
+          "[1518-11-01 00:05] falls asleep",
+          "[1518-11-03 00:06] falls asleep",
+          "[1518-11-01 00:00] Guard #10 begins shift",
+          "[1518-11-02 00:00] Guard #4 begins shift",
+          "[1518-11-01 00:07] wakes up",
+          "[1518-11-03 00:00] Guard #10 begins shift",
+          "[1518-11-03 00:08] wakes up"
+        ])
+
+      assert guard[:minute] == 6
+      assert guard[:id] == 10
+    end
+  end
+
   describe "roster" do
     test "marks when guards take their shifts" do
       roster =

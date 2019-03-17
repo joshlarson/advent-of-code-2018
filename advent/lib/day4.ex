@@ -2,11 +2,20 @@ defmodule Day4 do
   def main do
     {:ok, content} = File.read("day4_input.txt")
 
-    %{id: guard_id, minute: minute} =
+    input =
       content
       |> String.split("\n")
       |> Enum.filter(fn s -> s != "" end)
+
+    %{id: guard_id, minute: minute} =
+      input
       |> sleepiest
+
+    IO.puts(guard_id * minute)
+
+    %{id: guard_id, minute: minute} =
+      input
+      |> sleepy_minute
 
     IO.puts(guard_id * minute)
   end
@@ -22,16 +31,39 @@ defmodule Day4 do
       |> Enum.map(fn {id, shifts} -> {id, total_minutes_asleep(shifts)} end)
       |> Enum.max_by(fn {_, count} -> count end)
 
-    {minute, _} =
-      roster[guard_id]
-      |> Enum.reduce(&Enum.concat/2)
-      |> Enum.group_by(& &1)
-      |> Enum.max_by(fn {_, instances_for_minute} -> Enum.count(instances_for_minute) end)
+    {minute, _} = sleepiest_minute_for_guard(roster[guard_id])
 
     %{
       id: guard_id,
       minute: minute
     }
+  end
+
+  def sleepy_minute(input) do
+    roster =
+      input
+      |> Enum.sort()
+      |> roster()
+
+    {guard_id, {minute, _}} =
+      roster
+      |> Enum.map(fn {id, shifts} -> {id, sleepiest_minute_for_guard(shifts)} end)
+      |> Enum.max_by(fn {_, {_, count}} -> count end)
+
+    %{
+      id: guard_id,
+      minute: minute
+    }
+  end
+
+  defp sleepiest_minute_for_guard(shifts) do
+    shifts
+    |> Enum.reduce(&Enum.concat/2)
+    |> Enum.group_by(& &1)
+    |> Enum.map(fn {minute, instances_for_minute} ->
+      {minute, Enum.count(instances_for_minute)}
+    end)
+    |> Enum.max_by(fn {_, count} -> count end, fn -> {nil, 0} end)
   end
 
   defp total_minutes_asleep(shifts) do
