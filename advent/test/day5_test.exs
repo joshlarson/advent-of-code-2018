@@ -11,6 +11,17 @@ defmodule Day5Test do
     end
   end
 
+  describe "remove_and_react" do
+    test "removes a/A and reacts the result" do
+      assert Day5.remove_and_react('baBc') == 'c'
+      assert Day5.remove_and_react('bABc') == 'c'
+    end
+
+    test "removes b/B if the result is shorter" do
+      assert Day5.remove_and_react('bbaBcbb') == 'ac'
+    end
+  end
+
   describe "add_to_reacted" do
     test "it adds a string if reacted is empty" do
       assert Day5.add_to_reacted(?a, '') == 'a'
