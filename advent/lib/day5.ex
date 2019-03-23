@@ -5,17 +5,16 @@ defmodule Day5 do
     content
     |> String.split("\n")
     |> List.first()
+    |> to_charlist()
     |> reacted()
-    |> String.length()
+    |> Enum.count()
     |> IO.puts()
   end
-    
+
   def reacted(input) do
     input
-    |> String.codepoints()
-    |> Enum.reduce([], &add_to_reacted/2)
-    |> Enum.join()
-    |> String.reverse()
+    |> Enum.reduce('', &add_to_reacted/2)
+    |> Enum.reverse()
   end
 
   def add_to_reacted(new_char, reacted = [head | tail]) do
@@ -31,7 +30,6 @@ defmodule Day5 do
   end
 
   def react?(a, b) do
-    a == String.downcase(b) && b == String.upcase(a) ||
-      a == String.upcase(b) && b == String.downcase(a)
+    a + ?A == b + ?a || a + ?a == b + ?A
   end
 end
